@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { format, addMonths, startOfMonth, endOfMonth, eachDayOfInterval } from 'date-fns';
-// import QuickViewBox from '../components/QuickViewBox/QuickViewBox';
-// import DayBox from '../components/DayBox/DayBox';
+import QuickViewBox from '../QuickViewBox/QuickViewBox';
+import DayBox from '../DayBox/DayBox';
 
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 
@@ -50,10 +50,10 @@ export default function Calendar({ showToasts, BASEURL, isOutdated, showQuickVie
     return (
         <>
             <View style={styles.Calendar}>
-                <TouchableOpacity style={styles.QuickView} onPress={showToasts}>
+                <TouchableOpacity style={styles.QuickView} onPress={toggleQuickViewBox}>
                     <Text style={{color:'#fff'}}>Quick View</Text>
                 </TouchableOpacity>
-                {/* { showQuickView && <QuickViewBox BASEURL={BASEURL} propertyToFilter={propertyToFilter} /> } */}
+                { showQuickView && <QuickViewBox BASEURL={BASEURL} propertyToFilter={propertyToFilter} /> }
                 { months.map( month => (
                     <View key={month}>
                         <View style={styles.Calendar_Month}>
@@ -66,13 +66,11 @@ export default function Calendar({ showToasts, BASEURL, isOutdated, showQuickVie
                                 .map(day => (
                                     <TouchableOpacity 
                                         key={day}
-                                        style={isOutdated(day)? styles.isOutdated_Day : styles.Calendar_Day}
+                                        style={isOutdated(day) ? styles.isOutdated_Day : styles.Calendar_Day}
+                                        onPress={() => { isOutdated(day) ? toggleDayBox(null) : toggleDayBox(day) }}
                                         //     ${selectedDay && format(day, 'dd/MM/yyyy') === format(selectedDay, 'dd/MM/yyyy') ? 'calendar-day-selected' : ''}
                                         
                                         //     `} 
-                                        // onPress={() => {
-                                        //     isOutdated(day) ? toggleDayBox(null) : toggleDayBox(day)
-                                        // }}
                                     >
                                     <Text style={isOutdated(day)?{fontSize: 8, color: '#fff'}:{fontSize: 8}}>
                                         {format(day, 'EEEE')}
@@ -88,10 +86,10 @@ export default function Calendar({ showToasts, BASEURL, isOutdated, showQuickVie
                                 )
                             }
                         </View>
-                        {/* { selectedDay && format(month, 'MMMM yyyy') === format(selectedDay, 'MMMM yyyy') && (
+                        { selectedDay && format(month, 'MMMM yyyy') === format(selectedDay, 'MMMM yyyy') && (
                             <DayBox selectedDay={selectedDay} BASEURL={BASEURL} propertyToFilter={propertyToFilter} />
                             )
-                        } */}
+                        }
                     </View>
                 ))}
             </View>
@@ -101,6 +99,7 @@ export default function Calendar({ showToasts, BASEURL, isOutdated, showQuickVie
 
 const styles = StyleSheet.create({
     Calendar: {
+        // height: '75%',
         alignItems: 'center',
     },
     QuickView: {

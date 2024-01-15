@@ -9,7 +9,7 @@ import InlineForm from './components/InlineForm/InlineForm';
 
 export default function App() {
   const todayDate = new Date();
-  const BASEURL = `http://10.14.0.2:3001`;
+  const BASEURL = `IPv4 Address:3001`;
 
   const isOutdated = (day) => {
     todayDate.setHours(0, 0, 0, 0);
@@ -104,13 +104,17 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.display}>
-        <Text style={styles.greetings} onPress={showToasts}>Hi there! Today is { format(todayDate, 'MMMM do, y O') }</Text>
-        {/* <InlineForm style={styles.InlineForm} BASEURL= {BASEURL} todayDate={todayDate} isOutdated={isOutdated} addShift={addShift} deleteShift={deleteShift} ovSwitch={ovSwitch} handleChange={handleChange} shifts={shifts} handleSubmit={handleSubmit} /> */}
-        <ScrollView style={styles.Calendar}>
-          <Calendar showToasts={showToasts} BASEURL= {BASEURL} todayDate={todayDate}isOutdated={isOutdated} handleSubmit={handleSubmit} showQuickView={showQuickView} toggleQuickViewBox={toggleQuickViewBox} selectedDay={selectedDay} toggleDayBox={toggleDayBox} />
-        </ScrollView>
-      </View>
+      <ScrollView>
+        <View style={styles.display}>
+          <Text style={styles.greetings} onPress={showToasts}>Hi there! Today is { format(todayDate, 'MMMM do, y O') }</Text>
+          <View style={styles.InlineForm}>
+            <InlineForm BASEURL= {BASEURL} todayDate={todayDate} isOutdated={isOutdated} addShift={addShift} deleteShift={deleteShift} ovSwitch={ovSwitch} handleChange={handleChange} shifts={shifts} handleSubmit={handleSubmit} />
+          </View>
+          <View style={styles.Calendar}>
+            <Calendar  showToasts={showToasts} BASEURL= {BASEURL} todayDate={todayDate}isOutdated={isOutdated} handleSubmit={handleSubmit} showQuickView={showQuickView} toggleQuickViewBox={toggleQuickViewBox} selectedDay={selectedDay} toggleDayBox={toggleDayBox} />
+          </View>
+        </View>
+      </ScrollView>
       
       <ToastManager />
       <StatusBar style="auto" />
@@ -134,14 +138,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   greetings: {
-    height: '3%',
+    flex: 1,
     marginTop: 32,
   },
   InlineForm: {
-    
+    flex: 1,
   },
   Calendar: {
-    height: '90%',
-    width: '100%',
+    flex: 1,
   }
 });
