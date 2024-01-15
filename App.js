@@ -9,7 +9,7 @@ import InlineForm from './components/InlineForm/InlineForm';
 
 export default function App() {
   const todayDate = new Date();
-  const BASEURL = "http://localhost:3001";
+  const BASEURL = `http://10.14.0.2:3001`;
 
   const isOutdated = (day) => {
     todayDate.setHours(0, 0, 0, 0);
