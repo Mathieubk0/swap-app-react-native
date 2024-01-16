@@ -38,9 +38,10 @@ export default function QuickViewBox({ BASEURL, propertyToFilter }) {
                 <View style={styles.Loading_spinner}></View>
             ) : (
                 <View style= {styles.QuickViewBox}>
+                    <TextInput style={styles.SearchBox} placeholder="Search" onChangeText={setSearch}></TextInput>
                     <ScrollView horizontal>
-                            <View style={styles.Table}>
-                                <View style={styles.Header}>
+                            <View style={{flexDirection: 'column'}}>
+                                <View style={{flexDirection: 'row'}}>
                                     <View style={styles.Date}><Text style={{fontWeight: 'bold'}}>Date</Text></View>
                                     <View style={styles.Outbound}><Text style={{fontWeight: 'bold'}}>Outbound</Text></View>
                                     <View style={styles.Inbound}><Text style={{fontWeight: 'bold'}}>Inbound</Text></View>
@@ -63,7 +64,7 @@ export default function QuickViewBox({ BASEURL, propertyToFilter }) {
                                                 .map((dataItem, index) => (
                                                         <>
                                                             <ScrollView >
-                                                                <View style={styles.Body}>
+                                                                <View key={index} style={{backgroundColor: 'white', flexDirection: 'row'}}>
                                                                     <View style={styles.Date}><Text>{dataItem.Date}</Text></View>
                                                                     <View style={styles.Outbound}><Text style={{color: 'blue'}}>{dataItem.Outbound}</Text></View>
                                                                     <View style={styles.Inbound}><Text style={{color: 'blue'}}>{dataItem.Inbound}</Text></View>
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
     QuickViewBox: {
         backgroundColor: 'white',
         borderWidth: 1,
-        borderBlockColor: '#ccc',
+        borderColor: '#ccc',
         borderRadius: 5,
         width: '98%',
         margin: 5,
@@ -112,30 +113,29 @@ const styles = StyleSheet.create({
         width: 24,
         height: 24,
         margin: 20,
+        alignSelf: 'center'
         // animation: rotate 1s linear infinite,
     },
-    Table: {
-        flexDirection: 'column',
-    },
-    Header: {
-        flexDirection: 'row',
-    },
-    Body: {
-        flex: 1,
-        backgroundColor: 'white',
-        flexDirection: 'row',
-        justifyContent: 'center'
+    SearchBox: {
+        alignSelf: 'center',
+        borderColor: '#ccc',
+        borderWidth: 1,
+        borderRadius: 5,
+        height: 20,
+        width: 100,
+        textAlign: 'center',
+        margin: 2
     },
     Date: {width: 100, height: 20, justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#ccc'},
     Outbound: {width: 75, height: 20, justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#ccc'},
     Inbound: {width: 75, height: 20, justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#ccc'},
     Position: {width: 75, height: 20, justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#ccc'},
     Email: {width: 150, height: 20, justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#ccc'},
-    FOR: {width: 50, height: 20, justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#ccc'},
-    Early: {width: 50, height: 20, justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#ccc'},
-    Late: {width: 50, height: 20, justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#ccc'},
-    LTA: {width: 50, height: 20, justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#ccc'},
-    DO: {width: 50, height: 20, justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#ccc'},
-    Note: {width: 150, height: 20, justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#ccc'},
+    FOR: {width: 50, height: 20, backgroundColor: '#f0f0ffd9', justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#ccc'},
+    Early: {width: 50, height: 20, backgroundColor: '#f0f0ffd9', justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#ccc'},
+    Late: {width: 50, height: 20, backgroundColor: '#f0f0ffd9', justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#ccc'},
+    LTA: {width: 50, height: 20, backgroundColor: '#f0f0ffd9', justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#ccc'},
+    DO: {width: 50, height: 20, backgroundColor: '#f0f0ffd9', justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#ccc'},
+    Note: {width: 150, height: 20, backgroundColor: '#f0f0ffd9', justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#ccc'},
     Sent: {width: 150, height: 20, justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#ccc'}
   });

@@ -10,7 +10,7 @@ import InlineForm from './components/InlineForm/InlineForm';
 export default function App() {
 
   const todayDate = new Date();
-  const IPv4Address = '';
+  const IPv4Address = '192.168.0.8';
   const BASEURL = `http://${IPv4Address}:3001`;
 
   const isOutdated = (day) => {
@@ -91,7 +91,7 @@ export default function App() {
       .then(data => {
         console.log('Success', data);
         Toast.success(`${shift.Outbound} - ${shift.Inbound} on ${shift.Date} submitted successfully!`);
-        setShowQuickView(true)
+        // setShowQuickView(true)
       })
       .catch(error => {
         console.log(error);
@@ -113,7 +113,7 @@ export default function App() {
             <InlineForm BASEURL= {BASEURL} todayDate={todayDate} isOutdated={isOutdated} addShift={addShift} deleteShift={deleteShift} ovSwitch={ovSwitch} handleChange={handleChange} shifts={shifts} handleSubmit={handleSubmit} />
           </View>
           <View style={styles.Calendar}>
-            <Calendar  showToasts={showToasts} BASEURL= {BASEURL} todayDate={todayDate}isOutdated={isOutdated} handleSubmit={handleSubmit} showQuickView={showQuickView} toggleQuickViewBox={toggleQuickViewBox} selectedDay={selectedDay} toggleDayBox={toggleDayBox} />
+            <Calendar  showToasts={showToasts} BASEURL= {BASEURL} todayDate={todayDate}isOutdated={isOutdated} showQuickView={showQuickView} toggleQuickViewBox={toggleQuickViewBox} selectedDay={selectedDay} toggleDayBox={toggleDayBox} />
           </View>
         </View>
       </ScrollView>
@@ -133,13 +133,16 @@ const styles = StyleSheet.create({
   display: {
     flex: 1,
     backgroundColor: '#f0f0ffd9',
-    borderRadius: 16,
+    borderRadius: 5,
+    marginTop: 64,
     margin: 8,
     alignItems: 'center',
   },
   greetings: {
     flex: 1,
-    marginTop: 64
+    margin: 2,
+    fontSize: 17,
+    fontWeight: 'bold',
   },
   InlineForm: {
     flex: 2,
