@@ -8,8 +8,10 @@ import Calendar from './components/Calendar/Calendar';
 import InlineForm from './components/InlineForm/InlineForm';
 
 export default function App() {
+
   const todayDate = new Date();
-  const BASEURL = `IPv4 Address:3001`;
+  const IPv4Address = '';
+  const BASEURL = `http://${IPv4Address}:3001`;
 
   const isOutdated = (day) => {
     todayDate.setHours(0, 0, 0, 0);
@@ -124,27 +126,25 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: 'white',
+    alignSelf: 'center',
     flex: 1,
-    flexDirection: 'column',
-    backgroundColor: '#fff',
   },
   display: {
     flex: 1,
-    flexDirection: 'column',
     backgroundColor: '#f0f0ffd9',
     borderRadius: 16,
     margin: 8,
     alignItems: 'center',
-    justifyContent: 'center'
   },
   greetings: {
     flex: 1,
-    marginTop: 32,
+    marginTop: 64
   },
   InlineForm: {
-    flex: 1,
+    flex: 2,
   },
   Calendar: {
-    flex: 1,
+    flex: 3,
   }
 });

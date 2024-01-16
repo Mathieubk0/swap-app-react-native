@@ -12,10 +12,10 @@ export default function InlineForm({ addShift, deleteShift, ovSwitch, handleChan
 
 const styles = StyleSheet.create({
   InlineForm: {
-    borderColor: 'black',
-    borderWidth: 1,
-    height: 100,
-    width: 400,
+    backgroundColor: '#fff',
+
+    // height: 100,
+    // width: 400,
     margin: 4
   }
 });

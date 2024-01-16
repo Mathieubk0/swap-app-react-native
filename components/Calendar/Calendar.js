@@ -3,7 +3,7 @@ import { format, addMonths, startOfMonth, endOfMonth, eachDayOfInterval } from '
 import QuickViewBox from '../QuickViewBox/QuickViewBox';
 import DayBox from '../DayBox/DayBox';
 
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from "react-native";
 
 export default function Calendar({ showToasts, BASEURL, isOutdated, showQuickView, toggleQuickViewBox, selectedDay, toggleDayBox }) {
 
@@ -49,64 +49,66 @@ export default function Calendar({ showToasts, BASEURL, isOutdated, showQuickVie
 
     return (
         <>
-            <View style={styles.Calendar}>
-                <TouchableOpacity style={styles.QuickView} onPress={toggleQuickViewBox}>
-                    <Text style={{color:'#fff'}}>Quick View</Text>
-                </TouchableOpacity>
-                { showQuickView && <QuickViewBox BASEURL={BASEURL} propertyToFilter={propertyToFilter} /> }
-                { months.map( month => (
-                    <View key={month}>
-                        <View style={styles.Calendar_Month}>
-                            <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-                                {format( month, 'MMMM yyyy')}
-                            </Text>
-                        </View>
-                        <View style={styles.Calendar_Month}>
-                            { eachDayOfInterval({ start: startOfMonth(month), end: endOfMonth(month) })
-                                .map(day => (
-                                    <TouchableOpacity 
-                                        key={day}
-                                        style={isOutdated(day) ? styles.isOutdated_Day : styles.Calendar_Day}
-                                        onPress={() => { isOutdated(day) ? toggleDayBox(null) : toggleDayBox(day) }}
-                                        //     ${selectedDay && format(day, 'dd/MM/yyyy') === format(selectedDay, 'dd/MM/yyyy') ? 'calendar-day-selected' : ''}
-                                        
-                                        //     `} 
-                                    >
-                                    <Text style={isOutdated(day)?{fontSize: 8, color: '#fff'}:{fontSize: 8}}>
-                                        {format(day, 'EEEE')}
-                                    </Text>
-                                    <Text style={isOutdated(day)?{fontSize: 13, color: '#fff'}:{fontSize: 13}}>
-                                        {format(day, 'd')}
-                                    </Text>
-                                    { daysWithData.includes(format(day, 'dd/MM/yyyy')) && !isOutdated(day) === true ? 
-                                        ( <View style={styles.Dot}></View> ) : ( <View></View> )
-                                    }
-                                    </TouchableOpacity>
+            <ScrollView vertical={true}>
+                <View style={styles.Calendar}>
+                    <TouchableOpacity style={styles.QuickView_Button} onPress={toggleQuickViewBox}>
+                        <Text style={{color:'#fff'}}>Quick View</Text>
+                    </TouchableOpacity>
+                    { showQuickView && <QuickViewBox BASEURL={BASEURL} propertyToFilter={propertyToFilter} /> }
+                    { months.map( month => (
+                        <View key={month}>
+                            <View style={{alignItems: 'center'}}>
+                                <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+                                    {format( month, 'MMMM yyyy')}
+                                </Text>
+                            </View>
+                            <View style={styles.Calendar_Month}>
+                                { eachDayOfInterval({ start: startOfMonth(month), end: endOfMonth(month) })
+                                    .map(day => (
+                                        <TouchableOpacity 
+                                            key={day}
+                                            style={isOutdated(day) ? styles.isOutdated_Day : styles.Calendar_Day}
+                                            onPress={() => { isOutdated(day) ? toggleDayBox(null) : toggleDayBox(day) }}
+                                            //     ${selectedDay && format(day, 'dd/MM/yyyy') === format(selectedDay, 'dd/MM/yyyy') ? 'calendar-day-selected' : ''}
+                                            
+                                            //     `} 
+                                        >
+                                        <Text style={isOutdated(day)?{fontSize: 8, color: '#fff'}:{fontSize: 8}}>
+                                            {format(day, 'EEEE')}
+                                        </Text>
+                                        <Text style={isOutdated(day)?{fontSize: 13, color: '#fff'}:{fontSize: 13}}>
+                                            {format(day, 'd')}
+                                        </Text>
+                                        { daysWithData.includes(format(day, 'dd/MM/yyyy')) && !isOutdated(day) === true ? 
+                                            ( <View style={styles.Dot}></View> ) : ( <View></View> )
+                                        }
+                                        </TouchableOpacity>
+                                        )
                                     )
+                                }
+                            </View>
+                            { selectedDay && format(month, 'MMMM yyyy') === format(selectedDay, 'MMMM yyyy') && (
+                                <DayBox selectedDay={selectedDay} BASEURL={BASEURL} propertyToFilter={propertyToFilter} />
                                 )
                             }
                         </View>
-                        { selectedDay && format(month, 'MMMM yyyy') === format(selectedDay, 'MMMM yyyy') && (
-                            <DayBox selectedDay={selectedDay} BASEURL={BASEURL} propertyToFilter={propertyToFilter} />
-                            )
-                        }
-                    </View>
-                ))}
-            </View>
+                    ))}
+                </View>
+            </ScrollView>
         </>
     )
 }
 
 const styles = StyleSheet.create({
     Calendar: {
-        // height: '75%',
+        height: '100%',
         alignItems: 'center',
     },
-    QuickView: {
+    QuickView_Button: {
         backgroundColor: 'red',
         borderRadius: 4,
-        height: '4%',
-        width: '35%',
+        height: 25,
+        width: 100,
         alignItems: 'center',
         justifyContent: 'center',
     },
