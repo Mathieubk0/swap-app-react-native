@@ -10,6 +10,10 @@ export default function InlineForm({ BASEURL, isOutdated }) {
   const handleLink1Press = () => { Linking.openURL('https://www.google.com')};
   const handleLink2Press = () => { Linking.openURL('https://www.wikipedia.org')};
 
+  const [email, onChangeEmail] = useState('');
+  const [note, onChangeNote] = useState('');
+  const [selectedPosition, setSelectedPosition] = useState('');
+
   const [shifts, setShifts] = useState([{isOvernight: false, Date: '', Outbound: '', Inbound: '', Position:'', Early: false, Late: false, LTA: false, DO: false}]);
 
   const handleChange = (index, fieldName, value) => {
@@ -38,27 +42,17 @@ export default function InlineForm({ BASEURL, isOutdated }) {
       setSelectedDate(date);
     }
   };
-  const formatDate = (date) => {
-    return format(date, 'dd/MM/yyyy');
-  };
   const openDatePicker = () => {
     setShowDatePicker(true);
   };
 
-  const [email, onChangeEmail] = useState('');
-  const [note, onChangeNote] = useState('');
-  const [isOvernight, setIsOvernight] = useState(false);
-
   const ovSwitch = (index) => { 
     return () => {
-      setIsOvernight((previousState) => !previousState);
-
       const updatedShifts = [...shifts];
       updatedShifts[index].isOvernight = !updatedShifts[index].isOvernight;
       setShifts(updatedShifts);
     };
   };
-  const [selectedPosition, setSelectedPosition] = useState(null);
 
   const handleSubmit = () => {
 
@@ -72,7 +66,7 @@ export default function InlineForm({ BASEURL, isOutdated }) {
     shifts.forEach(shift => {
       const formData = {
         Email: email,
-        Date: formatDate(selectedDate),
+        Date: format(selectedDate, 'dd/MM/yyyy'),
         Outbound: shift.Outbound,
         Inbound: shift.isOvernight ? shift.Inbound + '+1d' : shift.Inbound,
         Position: selectedPosition,
@@ -134,57 +128,51 @@ export default function InlineForm({ BASEURL, isOutdated }) {
               {shifts.map((shift, index) => (
                 <View key={index} style={{flexDirection: 'row', margin: 0}}>
                   <View style={styles.SHIFT}>
-                    <TouchableOpacity style={styles.AddButton} onPress={addShift}><Text style={{color: 'white', fontSize: 9}}>+</Text></TouchableOpacity>
-                    <TouchableOpacity style={styles.DeleteButton} onPress={() => deleteShift(index)}><Text style={{color: 'white', fontSize: 9}}>-</Text></TouchableOpacity>
+                    <TouchableOpacity style={styles.AddButton} onPress={addShift}>
+                      <Text style={{color: 'white', fontSize: 11}}>+</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.DeleteButton} onPress={() => deleteShift(index)}>
+                      <Text style={{color: 'white', fontSize: 11}}>-</Text>
+                    </TouchableOpacity>
                   </View>
                   <View style={styles.Date}>
                     <TouchableOpacity onPress={openDatePicker}>
-                      <Text>{selectedDate.toDateString()}</Text>
+                      <Text>{format(selectedDate, 'dd/MM/yyyy')}</Text>
                     </TouchableOpacity>
-                      {showDatePicker && (
-                        <DateTimePicker
-                          value={selectedDate}
-                          mode="date"
-                          display="spinner"
-                          onChange={handleDateChange}
-                        />
-                      )}
+                    {showDatePicker && ( <DateTimePicker value={selectedDate} mode="date" display="spinner" onChange={handleDateChange} /> )}
                   </View>
-                  <View style={styles.Outbound}><TextInput onChangeText={(value) => handleChange(index, 'Outbound', value)} value={shift.Outbound} placeholder="Outbound" keyboardType="numeric" /></View>
-                  <View style={styles.Inbound}><TextInput onChangeText={(value) => handleChange(index, 'Inbound', value)} value={shift.Inbound} placeholder="Inbound" keyboardType="numeric" /></View>
-                  <View style={styles.Overnight}><Switch onValueChange={ovSwitch(index)} value={shift.isOvernight}></Switch></View>
+                  <View style={styles.Outbound}>
+                    <TextInput onChangeText={(value) => handleChange(index, 'Outbound', value)} value={shift.Outbound} placeholder="Outbound" keyboardType="numeric" />
+                  </View>
+                  <View style={styles.Inbound}>
+                    <TextInput onChangeText={(value) => handleChange(index, 'Inbound', value)} value={shift.Inbound} placeholder="Inbound" keyboardType="numeric" />
+                  </View>
+                  <View style={styles.Overnight}>
+                    <Switch value={shift.isOvernight} onValueChange={ovSwitch(index)} />
+                  </View>
                   <View style={styles.FIRST}>
-                    <CheckBox 
-                      value={selectedPosition === 'FIRST'} 
-                      onValueChange={() => {
-                        setSelectedPosition('FIRST');
-                        handleChange(index, 'Position', 'FIRST')
-                      }} 
-                    />
+                    <CheckBox value={selectedPosition === 'FIRST'} onValueChange={() => { setSelectedPosition('FIRST'); handleChange(index, 'Position', 'FIRST') }} />
                   </View>
                   <View style={styles.BAR}>
-                    <CheckBox 
-                      value={selectedPosition === 'BAR'} 
-                      onValueChange={() => {
-                        setSelectedPosition('BAR');
-                        handleChange(index, 'Position', 'BAR')
-                      }} 
-                    />
+                    <CheckBox value={selectedPosition === 'BAR'} onValueChange={() => { setSelectedPosition('BAR'); handleChange(index, 'Position', 'BAR') }} />
                   </View>
                   <View style={styles.PURSER}>
-                    <CheckBox 
-                      value={selectedPosition === 'PURSER'} 
-                      onValueChange={() => {
-                        setSelectedPosition('PURSER');
-                        handleChange(index, 'Position', 'PURSER')
-                      }} 
-                    />
+                    <CheckBox value={selectedPosition === 'PURSER'} onValueChange={() => { setSelectedPosition('PURSER'); handleChange(index, 'Position', 'PURSER') }} />
                   </View>
-                  <View style={styles.FOR}></View>
-                  <View style={styles.Early}><CheckBox value={shift.Early} onValueChange={() => handleChange(index, 'Early', !shift.Early)}></CheckBox></View>
-                  <View style={styles.Late}><CheckBox value={shift.Late} onValueChange={() => handleChange(index, 'Late', !shift.Late)}></CheckBox></View>
-                  <View style={styles.LTA}><CheckBox value={shift.LTA} onValueChange={() => handleChange(index, 'LTA', !shift.LTA)}></CheckBox></View>
-                  <View style={styles.DO}><CheckBox value={shift.DO} onValueChange={() => handleChange(index, 'DO', !shift.DO)}></CheckBox></View>
+                  <View style={styles.FOR}>
+                  </View>
+                  <View style={styles.Early}>
+                    <CheckBox value={shift.Early} onValueChange={() => handleChange(index, 'Early', !shift.Early)} />
+                  </View>
+                  <View style={styles.Late}>
+                    <CheckBox value={shift.Late} onValueChange={() => handleChange(index, 'Late', !shift.Late)} />
+                  </View>
+                  <View style={styles.LTA}>
+                    <CheckBox value={shift.LTA} onValueChange={() => handleChange(index, 'LTA', !shift.LTA)} />
+                  </View>
+                  <View style={styles.DO}>
+                    <CheckBox value={shift.DO} onValueChange={() => handleChange(index, 'DO', !shift.DO)} />
+                  </View>
                 </View>
               ))}
 
@@ -239,8 +227,8 @@ const styles = StyleSheet.create({
   AddButton: {
     backgroundColor: 'blue',
     borderRadius: 3,
-    height: 12,
-    width: 12,
+    height: 15,
+    width: 15,
     margin: 1,
     alignItems: 'center',
     justifyContent: 'center',
@@ -248,8 +236,8 @@ const styles = StyleSheet.create({
   DeleteButton: {
     backgroundColor: 'red',
     borderRadius: 3,
-    height: 12,
-    width: 12,
+    height: 15,
+    width: 15,
     margin: 1,
     alignItems: 'center',
     justifyContent: 'center',

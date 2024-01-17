@@ -5,7 +5,7 @@ import DayBox from '../DayBox/DayBox';
 
 import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from "react-native";
 
-export default function Calendar({ showToasts, BASEURL, isOutdated, showQuickView, toggleQuickViewBox, selectedDay, toggleDayBox }) {
+export default function Calendar({ BASEURL, isOutdated, showQuickView, toggleQuickViewBox, selectedDay, toggleDayBox }) {
 
     // Display Months & Days 
     const [currentDate, setCurrentDate] = useState(new Date());
