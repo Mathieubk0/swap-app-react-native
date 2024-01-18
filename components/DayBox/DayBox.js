@@ -45,8 +45,8 @@ export default function DayBox({ BASEURL, selectedDay, propertyToFilter}) {
                 <View style= {styles.DayBox}>
                     <TextInput style={styles.SearchBox} placeholder="Search" onChangeText={setSearch}></TextInput>
                     <ScrollView horizontal>
-                            <View style={styles.Table}>
-                                <View style={styles.Header}>
+                            <View style={{flexDirection: 'column'}}>
+                                <View style={{flexDirection: 'row'}}>
                                     <View style={styles.Date}><Text style={{backgroundColor: '#f0f0ffd9', borderRadius: 5, padding: 1, margin: 2, fontSize: 12, fontWeight: 'bold'}}>{format(selectedDay, 'dd/MM/yyyy')}</Text></View>
                                     <View style={styles.Outbound}><Text style={{fontWeight: 'bold'}}>Outbound</Text></View>
                                     <View style={styles.Inbound}><Text style={{fontWeight: 'bold'}}>Inbound</Text></View>
@@ -88,7 +88,7 @@ export default function DayBox({ BASEURL, selectedDay, propertyToFilter}) {
                                                     ))
                                                 ) : (
                                                     <View>
-                                                        <View style={styles.Body}><Text>No shift yet. Add yours 🤓</Text></View>
+                                                        <View style={{marginLeft: 18}}><Text>No shift yet. Add yours 🤓</Text></View>
                                                     </View>
                                     )}
                             </View>
@@ -131,12 +131,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         margin: 2
     },
-    Table: {
-        flexDirection: 'column',
-    },
-    Header: {
-        flexDirection: 'row',
-    },
     Date: {width: 100, height: 20, justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#ccc'},
     Outbound: {width: 75, height: 20, justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#ccc'},
     Inbound: {width: 75, height: 20, justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#ccc'},
@@ -149,4 +143,4 @@ const styles = StyleSheet.create({
     DO: {width: 50, height: 20, backgroundColor: '#f0f0ffd9', justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#ccc'},
     Note: {width: 150, height: 20, justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#ccc'},
     Sent: {width: 150, height: 20, justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#ccc'}
-  });
+});

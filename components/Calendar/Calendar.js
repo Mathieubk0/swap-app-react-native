@@ -67,11 +67,10 @@ export default function Calendar({ BASEURL, isOutdated, showQuickView, toggleQui
                                     .map(day => (
                                         <TouchableOpacity 
                                             key={day}
-                                            style={isOutdated(day) ? styles.isOutdated_Day : styles.Calendar_Day}
+                                            style={
+                                                isOutdated(day) ? styles.isOutdated_Day 
+                                                : (selectedDay && format(day, 'dd/MM/yyyy') === format(selectedDay, 'dd/MM/yyyy') ? styles.Calendar_Day_Selected : styles.Calendar_Day)}
                                             onPress={() => { isOutdated(day) ? toggleDayBox(null) : toggleDayBox(day) }}
-                                            //     ${selectedDay && format(day, 'dd/MM/yyyy') === format(selectedDay, 'dd/MM/yyyy') ? 'calendar-day-selected' : ''}
-                                            
-                                            //     `} 
                                         >
                                         <Text style={isOutdated(day)?{fontSize: 8, color: '#fff'}:{fontSize: 8}}>
                                             {format(day, 'EEEE')}
@@ -131,7 +130,16 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
     },
     Calendar_Day_Selected: {
-
+        backgroundColor: '#b4b4ff',
+        borderColor: 'lightgrey',
+        borderRadius: 5,
+        borderWidth: 1,
+        margin: 1,
+        height: 45,
+        width: 45,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
     },
     isOutdated_Day: {
         backgroundColor: 'grey',
@@ -151,4 +159,4 @@ const styles = StyleSheet.create({
         width: 7,
         borderRadius: 100,
     }
-  });
+});

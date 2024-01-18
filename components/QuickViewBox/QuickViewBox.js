@@ -83,7 +83,7 @@ export default function QuickViewBox({ BASEURL, propertyToFilter }) {
                                                     ))
                                                 ) : (
                                                     <View>
-                                                        <View style={styles.Body}><Text>No shift yet. Add yours 🤓</Text></View>
+                                                        <View style={{marginLeft: 18}}><Text>No shift yet. Add yours 🤓</Text></View>
                                                     </View>
                                     )}
                             </View>
@@ -138,4 +138,4 @@ const styles = StyleSheet.create({
     DO: {width: 50, height: 20, backgroundColor: '#f0f0ffd9', justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#ccc'},
     Note: {width: 150, height: 20, backgroundColor: '#f0f0ffd9', justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#ccc'},
     Sent: {width: 150, height: 20, justifyContent: 'center', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: '#ccc'}
-  });
+});

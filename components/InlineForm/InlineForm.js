@@ -36,14 +36,14 @@ export default function InlineForm({ BASEURL, isOutdated }) {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
 
+  const openDatePicker = () => {
+    setShowDatePicker(true);
+  };
   const handleDateChange = (event, date) => {
     setShowDatePicker(false);
     if (date) {
       setSelectedDate(date);
     }
-  };
-  const openDatePicker = () => {
-    setShowDatePicker(true);
   };
 
   const ovSwitch = (index) => { 
